@@ -1,0 +1,11 @@
+[project]
+name = "arxd"
+description = "A tool to extract (and delete) all archive files in pwd."
+version = "1.0.0"
+authors = [
+  {name = "Muhammad Altaaf", email = "taafuuu@gmail.com"}
+]
+
+
+[project.scripts]
+arxd = "arxd.arxd:main"
