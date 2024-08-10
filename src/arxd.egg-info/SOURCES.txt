@@ -1,7 +1,0 @@
-pyproject.toml
-src/arxd/arxd.py
-src/arxd.egg-info/PKG-INFO
-src/arxd.egg-info/SOURCES.txt
-src/arxd.egg-info/dependency_links.txt
-src/arxd.egg-info/entry_points.txt
-src/arxd.egg-info/top_level.txt
