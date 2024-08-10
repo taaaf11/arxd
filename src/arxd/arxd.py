@@ -27,7 +27,7 @@ class _Config:
 
 
 def get_avail_ar_fmts() -> list[str]:
-    """Returns list of availalbe archive formats."""
+    """Returns list of available archive formats."""
 
     fmts = []
     fmts_detail = shutil.get_unpack_formats()
@@ -133,7 +133,7 @@ def main():
 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
-        exit(1)
+        sys.exit(1)
 
     args = parser.parse_args()
 
@@ -144,7 +144,6 @@ def main():
         auto_del = True
     if args.prefix:
         prefix = args.prefix.strip("/")
-
     if args.extract:
         config = _Config(prefix, auto_del)
         extract_archives(filenames, config)
