@@ -8,4 +8,4 @@ authors = [
 
 
 [project.scripts]
-arxd = "arxd.arxd:main"
+arxd = "arxd.main:main"

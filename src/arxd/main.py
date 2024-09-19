@@ -2,12 +2,10 @@ from __future__ import annotations
 
 import os
 import typing
+from argparse import Namespace
 
-from .arxd import is_ar
-from .utils import parse_arguments, extract_archives
-
-if typing.TYPE_CHECKING:
-    from argparse import Namespace
+from .arxd import is_ar, extract_archives
+from .utils import parse_arguments
 
 
 def main() -> None:

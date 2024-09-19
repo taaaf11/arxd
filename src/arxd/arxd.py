@@ -55,3 +55,12 @@ def ex_ar(filename: str, prefix: str) -> None:
     create_missing_dirs(prefix, ex_dir)
     full_path = os.path.join(prefix, ex_dir)
     shutil.unpack_archive(filename, full_path)
+
+
+def extract_archives(filenames: Iterable[str], prefix: str, auto_del: bool) -> None:
+    """Wrapper function for .arxd.ex_ar function."""
+
+    for filename in filenames:
+        ex_ar(filename, prefix)
+        if auto_del:
+            os.remove(filename)

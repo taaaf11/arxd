@@ -5,8 +5,6 @@ import sys
 import typing
 from argparse import ArgumentParser
 
-from .arxd import ex_ar
-
 if typing.TYPE_CHECKING:
     from argparse import Namespace
     from collections.abc import Iterable
@@ -54,12 +52,3 @@ def create_missing_dirs(prefix, ex_dir) -> None:
     if prefix:
         mkdir(prefix)
     mkdir(ex_dir)
-
-
-def extract_archives(filenames: Iterable[str], prefix: str, auto_del: bool) -> None:
-    """Wrapper function for .arxd.ex_ar function."""
-
-    for filename in filenames:
-        ex_ar(filename, prefix)
-        if auto_del:
-            os.remove(filename)
