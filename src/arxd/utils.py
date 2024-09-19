@@ -3,15 +3,21 @@ from __future__ import annotations
 import os
 import sys
 import typing
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
+
+from .constants import PROG_NAME, PROG_DESC, PROG_EPILOG
 
 if typing.TYPE_CHECKING:
     from argparse import Namespace
-    from collections.abc import Iterable
 
 
 def parse_arguments() -> Namespace | None:
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        prog=PROG_NAME,
+        description=PROG_DESC,
+        epilog=PROG_EPILOG,
+        formatter_class=RawDescriptionHelpFormatter,
+    )
     add_arg = parser.add_argument
 
     add_arg(
@@ -33,7 +39,7 @@ def parse_arguments() -> Namespace | None:
         "-p",
         "--prefix",
         type=str,
-        default=None,
+        default="",
         help="Set prefix. Default is <current directory>/",
     )
 
@@ -44,7 +50,7 @@ def parse_arguments() -> Namespace | None:
     return parser.parse_args()
 
 
-def create_missing_dirs(prefix, ex_dir) -> None:
+def create_missing_dirs(prefix: str, ex_dir: str) -> None:
     def mkdir(path):
         if not os.path.exists(path):
             os.mkdir(path)

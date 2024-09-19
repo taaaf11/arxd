@@ -1,3 +1,11 @@
+# #####################################################
+# Name: arxd
+# Author: Muhammad Altaaf
+# Contact: taafuuu@gmail.com
+# Descriptions: Extract and delete archive files
+# present in present working directory.
+# #####################################################
+
 from __future__ import annotations
 
 import os
