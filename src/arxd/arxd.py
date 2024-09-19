@@ -1,11 +1,3 @@
-"""
-Name: arxd
-Author: Muhammad Altaaf
-Contact: taafuuu@gmail.com
-Description: A script to extract (and delete if asked) all
-the archive files present in cwd.
-"""
-
 from __future__ import annotations
 
 import os
