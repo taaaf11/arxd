@@ -25,6 +25,8 @@ arxd -e -p /path/to/prefix
 arxd -e -d
 ```
 
+More in help message with `-h` option.
+
 
 ### Installation
 1. Clone the repository or download zip.
