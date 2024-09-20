@@ -18,11 +18,16 @@ from .utils import parse_arguments
 
 
 def main() -> None:
+    # parse_arguments function returns None only if no command
+    # line argument is given. In that case, it exits the program.
+    # So it is safe to type cast its return value
     args: Namespace = typing.cast(Namespace, parse_arguments())
-    ign_pat = re.compile(args.ignore)
+    ignore_pattern = re.compile(args.ignore)
 
-    # get filenames of archives under present working directory
-    filenames = filter(lambda filename: filter_ar(filename, ign_pat), os.listdir())
+    filenames = filter(
+        lambda filename: filter_ar(filename, ignore_pattern),
+        os.listdir(),
+    )
 
     if args.extract:
         extract_archives(filenames, args.prefix, args.delete)

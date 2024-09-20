@@ -9,7 +9,6 @@ from .utils import create_missing_dirs
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable
     from re import Pattern
-    from typing import Optional
 
 
 def avail_ar_exts() -> Iterable[str]:
@@ -39,12 +38,15 @@ def split_name_ext(filename: str) -> str | None:
     for fmt in avail_ar_exts():
         if filename.endswith(fmt):
             return filename.removesuffix(fmt)
-    return None
+    return None  # for mypy
 
 
 def ex_ar(filename: str, prefix: str) -> None:
     """Extract archive file."""
 
+    # split_name_ext will only return str
+    # It would return None only if given filename is not
+    # of an archive file. So it is safe to type cast.
     ex_dir: str = typing.cast(str, split_name_ext(filename))
     create_missing_dirs(prefix, ex_dir)
     full_path = os.path.join(prefix, ex_dir)
@@ -60,9 +62,10 @@ def extract_archives(filenames: Iterable[str], prefix: str, auto_del: bool) -> N
             os.remove(filename)
 
 
-def filter_ar(filename: str, pattern: Pattern) -> bool:
-    """Given filename should not match pattern, and if matches
-    the file is ignored.
+def filter_ar(filename: str, ignore_pattern: Pattern) -> bool:
+    """Returns True if given filename has an extension as
+    given by avail_ar_exts and it does NOT match
+    given compiled regex pattern (ignore_pattern).
     """
 
-    return is_ar(filename) and not pattern.match(filename)
+    return is_ar(filename) and not ignore_pattern.match(filename)
