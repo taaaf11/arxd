@@ -5,7 +5,7 @@ PROG_DESC = """\
 ├─┤├┬┘┌┴┬┘ ││
 ┴ ┴┴└─┴ └──┴┘
 
-Extract and delete archive files present in present working directory.\
+Extract (and delete) archive files under present working directory.\
 """
 PROG_AUTHOR = "Muhammad Altaaf <taafuuu@gmail.com>"
 PROG_EPILOG = f"""\

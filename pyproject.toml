@@ -1,6 +1,7 @@
 [project]
 name = "arxd"
-description = "A tool to extract (and delete) all archive files in pwd."
+description = "Extract (and delete) archive files under present working directory."
+readme = "README.md"
 version = "1.0.0"
 authors = [
   {name = "Muhammad Altaaf", email = "taafuuu@gmail.com"}

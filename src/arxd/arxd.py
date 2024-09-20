@@ -50,7 +50,7 @@ def ex_ar(filename: str, prefix: str) -> None:
 
 
 def extract_archives(filenames: Iterable[str], prefix: str, auto_del: bool) -> None:
-    """Wrapper function for .arxd.ex_ar function."""
+    """Wrapper function for ex_ar function."""
 
     for filename in filenames:
         ex_ar(filename, prefix)
