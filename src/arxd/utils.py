@@ -42,6 +42,14 @@ def parse_arguments() -> Namespace | None:
         default="",
         help="Set prefix. Default is <current directory>/",
     )
+    add_arg(
+        "-i",
+        "--ignore",
+        metavar="PATTERN",
+        type=str,
+        default="~^",
+        help="Ignore filenames matching given PATTERN.",
+    )
 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
@@ -57,4 +65,4 @@ def create_missing_dirs(prefix: str, ex_dir: str) -> None:
 
     if prefix:
         mkdir(prefix)
-    mkdir(ex_dir)
+    mkdir(os.path.join(prefix, ex_dir))

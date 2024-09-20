@@ -8,6 +8,8 @@ from .utils import create_missing_dirs
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable
+    from re import Pattern
+    from typing import Optional
 
 
 def avail_ar_exts() -> Iterable[str]:
@@ -56,3 +58,11 @@ def extract_archives(filenames: Iterable[str], prefix: str, auto_del: bool) -> N
         ex_ar(filename, prefix)
         if auto_del:
             os.remove(filename)
+
+
+def filter_ar(filename: str, pattern: Pattern) -> bool:
+    """Given filename should not match pattern, and if matches
+    the file is ignored.
+    """
+
+    return is_ar(filename) and not pattern.match(filename)
