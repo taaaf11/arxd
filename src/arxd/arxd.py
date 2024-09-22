@@ -46,8 +46,10 @@ def ex_ar(filename: str, prefix: str) -> None:
 
     # split_name_ext will only return str
     # It would return None only if given filename is not
-    # of an archive file. So it is safe to type cast.
-    ex_dir: str = typing.cast(str, split_name_ext(filename))
+    # of an archive file. This would not happen as filename
+    # filtering is done before this ex_ar is called.
+    # So it is safe to type cast.
+    ex_dir = typing.cast(str, split_name_ext(filename))
     create_missing_dirs(prefix, ex_dir)
     full_path = os.path.join(prefix, ex_dir)
     shutil.unpack_archive(filename, full_path)
