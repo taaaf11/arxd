@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import functools
 import os
 import re
 import typing
@@ -21,11 +22,13 @@ def main() -> None:
     # parse_arguments function returns None only if no command
     # line argument is given. In that case, it exits the program.
     # So it is safe to type cast its return value
-    args: Namespace = typing.cast(Namespace, parse_arguments())
+    args = typing.cast(Namespace, parse_arguments())
     ignore_pattern = re.compile(args.ignore)
 
+    filter_f = functools.partial(filter_ar, ignore_pattern=ignore_pattern)
+
     filenames = filter(
-        lambda filename: filter_ar(filename, ignore_pattern),
+        filter_f,
         os.listdir(),
     )
 
