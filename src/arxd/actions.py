@@ -2,9 +2,8 @@ from argparse import Action, RawDescriptionHelpFormatter, SUPPRESS
 from collections import namedtuple
 
 
-HelpComponents = namedtuple("HelpComponents",
-                            "desc usage options_help epilog".split()
-                            )
+HelpComponents = namedtuple("HelpComponents", "desc usage options_help epilog".split())
+
 
 class CustomHelpAction(Action):
     def __init__(self, *args, **kwargs):
@@ -32,12 +31,12 @@ class CustomHelpAction(Action):
     def __call__(self, parser, namespace, values, option_string):
         h_cmpnts = self.split_help(parser)
 
-        print(h_cmpnts.desc, end="\n"*2)
+        print(h_cmpnts.desc, end="\n" * 2)
 
-        print(h_cmpnts.usage, end="\n"*2)
+        print(h_cmpnts.usage, end="\n" * 2)
 
         print("Options:")
-        print(h_cmpnts.options_help, end="\n"*2)
+        print(h_cmpnts.options_help, end="\n" * 2)
 
         print(h_cmpnts.epilog)
 
