@@ -6,7 +6,7 @@ import typing
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 from .actions import CustomHelpAction
-from .constants import PROG_NAME, PROG_DESC, PROG_EPILOG
+from .constants import PROG_DESC, PROG_EPILOG, PROG_NAME
 
 if typing.TYPE_CHECKING:
     from argparse import Namespace

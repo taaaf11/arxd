@@ -1,6 +1,5 @@
-from argparse import Action, RawDescriptionHelpFormatter, SUPPRESS
+from argparse import Action, RawDescriptionHelpFormatter
 from collections import namedtuple
-
 
 HelpComponents = namedtuple("HelpComponents", "desc usage options_help epilog".split())
 
