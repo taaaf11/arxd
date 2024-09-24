@@ -1,5 +1,7 @@
-from argparse import Action, RawDescriptionHelpFormatter
+from argparse import Action
 from collections import namedtuple
+
+from .constants import PROG_VER_INFO
 
 HelpComponents = namedtuple("HelpComponents", "desc usage options_help epilog".split())
 
@@ -39,8 +41,20 @@ class CustomHelpAction(Action):
         print(h_cmpnts.usage, end="\n" * 2)
 
         print("Options:")
-        print(h_cmpnts.options_help, end="\n" * 2)
+        print(h_cmpnts.options_help, end="\n")
 
-        print(h_cmpnts.epilog)
+        if h_cmpnts.epilog:
+            print()
+            print(h_cmpnts.epilog)
 
         parser.exit()
+
+
+class VerInfoAction(Action):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.nargs = 0
+        self.help = "Print version info."
+
+    def __call__(self, parser, namespace, values, option_string):
+        print(PROG_VER_INFO)

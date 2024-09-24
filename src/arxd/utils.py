@@ -5,8 +5,8 @@ import sys
 import typing
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-from .actions import CustomHelpAction
-from .constants import PROG_DESC, PROG_EPILOG, PROG_NAME
+from .actions import CustomHelpAction, VerInfoAction
+from .constants import PROG_DESC, PROG_NAME
 
 if typing.TYPE_CHECKING:
     from argparse import Namespace
@@ -16,7 +16,6 @@ def parse_arguments() -> Namespace:
     parser = ArgumentParser(
         prog=PROG_NAME,
         description=PROG_DESC,
-        epilog=PROG_EPILOG,
         add_help=False,
         formatter_class=RawDescriptionHelpFormatter,
     )
@@ -43,6 +42,11 @@ def parse_arguments() -> Namespace:
         type=str,
         default="~^",  # does not match anything
         help="Ignore filenames matching given PATTERN.",
+    )
+    add_arg(
+        "-V",
+        "--version",
+        action=VerInfoAction,
     )
     add_arg(
         "-h",
