@@ -29,7 +29,7 @@ class CustomHelpAction(Action):
         # split[0] is "options:"
         opt_help = "\n".join(split[1:])
 
-        usage = f"U{usage[:1]}"  # Usage: ...
+        usage = f"U{usage[1:]}"  # Usage: ...
 
         return HelpComponents(description, usage, opt_help, epilog)
 
