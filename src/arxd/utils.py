@@ -47,9 +47,8 @@ def parse_arguments() -> Namespace:
         "-v",
         "--verbose",
         dest="verbosity",
-        action="count",
-        help="Be verbose. To increase, use multiple times e.g. "
-        "arxd -vv",
+        action="store_true",
+        help="Be verbose.",
     )
     add_arg(
         "-V",

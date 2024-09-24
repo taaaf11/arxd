@@ -8,26 +8,19 @@
 
 from __future__ import annotations
 
-import functools
 import os
-import re
 
-from .arxd import extract_archives, filter_ar
+from .arxd import extract_archives, is_ar
 from .utils import parse_arguments
 
 
 def main() -> None:
     args = parse_arguments()
-    ignore_pattern = re.compile(args.ignore)
-
-    filter_f = functools.partial(filter_ar, ignore_pattern=ignore_pattern)
-
     filenames = filter(
-        filter_f,
+        is_ar,
         os.listdir(),
     )
-
-    extract_archives(filenames, args.prefix, args.delete, args.verbosity)
+    extract_archives(filenames, args.prefix, args.delete, args.ignore, args.verbosity)
 
 
 if __name__ == "__main__":

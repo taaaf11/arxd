@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import typing
 
@@ -55,25 +56,36 @@ def ex_ar(filename: str, prefix: str) -> None:
     shutil.unpack_archive(filename, full_path)
 
 
-def extract_archives(filenames: Iterable[str], prefix: str, auto_del: bool, verbosity: int) -> None:
+def extract_archives(
+    filenames: Iterable[str],
+    prefix: str,
+    auto_del: bool,
+    ignore_pattern: str,
+    verbosity: int,
+) -> None:
     """Wrapper function for ex_ar function."""
 
+    ignore_pattern = re.compile(ignore_pattern)
+
     for filename in filenames:
-        if verbosity == 2:
+        # ignore file
+        if ignore_pattern.match(filename):
+            if verbosity:
+                print(f"Ignoring file: {filename}")
+            continue
+
+        # start extraction
+        if verbosity:
             print(f"Starting extraction: {filename}")
+
         ex_ar(filename, prefix)
-        if verbosity == 1:
+
+        # finish extraction
+        if verbosity:
             print(f"Extracted file: {filename}")
+
+        # delete file
         if auto_del:
             os.remove(filename)
             if verbosity:
                 print(f"Delete file: {filename}")
-
-
-def filter_ar(filename: str, ignore_pattern: Pattern) -> bool:
-    """Returns True if given filename has an extension as
-    given by avail_ar_exts and it does NOT match
-    given compiled regex pattern (ignore_pattern).
-    """
-
-    return is_ar(filename) and not ignore_pattern.match(filename)
