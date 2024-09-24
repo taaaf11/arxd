@@ -5,7 +5,7 @@ PROG_NAME_DESIGN = """\
 ┴ ┴┴└─┴ └──┴┘
 """
 
-PROG_VER = "1.0.0"
+PROG_VER = "2.0.0"
 
 PROG_DESC = f"""\
 {PROG_NAME_DESIGN}
