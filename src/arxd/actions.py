@@ -58,3 +58,4 @@ class VerInfoAction(Action):
 
     def __call__(self, parser, namespace, values, option_string):
         print(PROG_VER_INFO)
+        parser.exit()
