@@ -44,6 +44,14 @@ def parse_arguments() -> Namespace:
         help="Ignore filenames matching given PATTERN.",
     )
     add_arg(
+        "-v",
+        "--verbose",
+        dest="verbosity",
+        action="count",
+        help="Be verbose. To increase, use multiple times e.g. "
+        "arxd -vv",
+    )
+    add_arg(
         "-V",
         "--version",
         action=VerInfoAction,

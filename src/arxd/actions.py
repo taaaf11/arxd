@@ -29,7 +29,7 @@ class CustomHelpAction(Action):
         # split[0] is "options:"
         opt_help = "\n".join(split[1:])
 
-        usage = usage.strip().capitalize()
+        usage = usage[0].upper() + "".join(list(usage[1:]))
 
         return HelpComponents(description, usage, opt_help, epilog)
 

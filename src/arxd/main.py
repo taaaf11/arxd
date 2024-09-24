@@ -27,7 +27,7 @@ def main() -> None:
         os.listdir(),
     )
 
-    extract_archives(filenames, args.prefix, args.delete)
+    extract_archives(filenames, args.prefix, args.delete, args.verbosity)
 
 
 if __name__ == "__main__":

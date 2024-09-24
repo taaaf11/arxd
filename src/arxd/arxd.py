@@ -55,13 +55,19 @@ def ex_ar(filename: str, prefix: str) -> None:
     shutil.unpack_archive(filename, full_path)
 
 
-def extract_archives(filenames: Iterable[str], prefix: str, auto_del: bool) -> None:
+def extract_archives(filenames: Iterable[str], prefix: str, auto_del: bool, verbosity: int) -> None:
     """Wrapper function for ex_ar function."""
 
     for filename in filenames:
+        if verbosity == 2:
+            print(f"Starting extraction: {filename}")
         ex_ar(filename, prefix)
+        if verbosity == 1:
+            print(f"Extracted file: {filename}")
         if auto_del:
             os.remove(filename)
+            if verbosity:
+                print(f"Delete file: {filename}")
 
 
 def filter_ar(filename: str, ignore_pattern: Pattern) -> bool:
