@@ -10,22 +10,20 @@ Prefix defaults to current directory.
 That is, extraction of "flowers.zip" creates "flowers" directory with archive
 contents under prefix directory.
 
-- To start extraction, use `-e` option. Without this option, no extraction occurs.
-```bash
-arxd -e
-```
-
 - To specify custom prefix, use `-p` option.
 ```bash
-arxd -e -p /path/to/prefix
+arxd -p /path/to/prefix
 ```
 
 - To delete the files after extraction, specify `-d` option.
 ```bash
-arxd -e -d
+arxd -d
 ```
 
-More in help message with `-h` option.
+- To ignore files, you can give regex pattern using `-i` option.
+```bash
+arxd -i PATTERN
+```
 
 
 ### Installation
