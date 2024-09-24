@@ -25,6 +25,8 @@ arxd -d
 arxd -i PATTERN
 ```
 
+More in help message with `-h` option.
+
 
 ### Installation
 1. Clone the repository or download zip.
