@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from argparse import Namespace
 
 
-def parse_arguments() -> Namespace | None:
+def parse_arguments() -> Namespace:
     parser = ArgumentParser(
         prog=PROG_NAME,
         description=PROG_DESC,
@@ -22,14 +22,6 @@ def parse_arguments() -> Namespace | None:
     )
     add_arg = parser.add_argument
 
-    add_arg(
-        "-e",
-        "--extract",
-        action="store_true",
-        default=False,
-        help="Start extraction. None of the options have "
-        "effect without this option.",
-    )
     add_arg(
         "-d",
         "--delete",
@@ -57,10 +49,6 @@ def parse_arguments() -> Namespace | None:
         "--help",
         action=CustomHelpAction,
     )
-
-    if len(sys.argv) == 1:
-        parser.print_help(sys.stderr)
-        sys.exit(1)
 
     return parser.parse_args()
 
