@@ -14,17 +14,21 @@ class CustomHelpAction(Action):
     def split_help(self, parser):
         description = parser.description or ""
         epilog = parser.epilog or ""
-        usage = parser.format_usage().strip().capitalize()
+        usage = parser.format_usage()
 
         help_ = parser.format_help()
+
+        # removing substrings until options' help is left
         help_ = help_.replace(description, "")
         help_ = help_.replace(epilog, "")
-        split = [i for i in help_.split("\n") if i]
+        help_ = help_.replace(usage, "")
+        help_ = help_.strip()
+        split = help_.split("\n")
 
-        # usage is always there
-        opt_help_idx = 1
-        opt_help_idx += 1 if description else 0
-        opt_help = "\n".join(split[opt_help_idx:])
+        # split[0] is "options:"
+        opt_help = "\n".join(split[1:])
+
+        usage = usage.strip().capitalize()
 
         return HelpComponents(description, usage, opt_help, epilog)
 
@@ -41,7 +45,3 @@ class CustomHelpAction(Action):
         print(h_cmpnts.epilog)
 
         parser.exit()
-
-
-def remove_empty_strings(l: list[str]) -> list:
-    return [_ for _ in l if _]
