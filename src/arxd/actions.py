@@ -1,9 +1,14 @@
 from argparse import Action
-from collections import namedtuple
+from typing import NamedTuple
 
 from .constants import PROG_VER_INFO
 
-HelpComponents = namedtuple("HelpComponents", "desc usage options_help epilog".split())
+
+class HelpComponents(NamedTuple):
+    desc: str
+    usage: str
+    options_help: str
+    epilog: str
 
 
 class CustomHelpAction(Action):
