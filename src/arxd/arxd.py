@@ -19,30 +19,31 @@ def avail_ar_exts() -> Iterable[str]:
         yield from fmt_exts
 
 
-def is_ar(filename: str) -> bool:
-    """Returns whether given filename is of archive file."""
+def is_ar(path: str) -> bool:
+    """Returns whether given path is of archive file."""
 
-    if not os.path.isfile(filename):
+    if not os.path.isfile(path):
         return False
 
     for fmt in avail_ar_exts():
-        if filename.endswith(fmt):
+        if path.endswith(fmt):
             return True
     return False
 
 
-def split_name_ext(filename: str) -> str | None:
-    """Split archive filename into two parts:
-    filename without extension, the extension.
+def strip_ext(path: str) -> str | None:
+    """Strips extension from path to an archive file.
+    Example:
+    split_name_ext('/path/to/archive.zip') => '/path/to/archive'
     """
 
     for fmt in avail_ar_exts():
-        if filename.endswith(fmt):
-            return filename.removesuffix(fmt)
+        if path.endswith(fmt):
+            return path.removesuffix(fmt)
     return None  # for mypy
 
 
-def ex_ar(filename: str, prefix: str) -> None:
+def ex_ar(path: str, prefix: str) -> None:
     """Extract archive file."""
 
     # split_name_ext will only return str
@@ -50,14 +51,14 @@ def ex_ar(filename: str, prefix: str) -> None:
     # of an archive file. This would not happen as filename
     # filtering is done before this ex_ar is called.
     # So it is safe to type cast.
-    ex_dir = typing.cast(str, split_name_ext(filename))
+    ex_dir = typing.cast(str, strip_ext(path))
     create_missing_dirs(prefix, ex_dir)
     full_path = os.path.join(prefix, ex_dir)
     shutil.unpack_archive(filename, full_path)
 
 
 def extract_archives(
-    filenames: Iterable[str],
+    paths: Iterable[str],
     prefix: str,
     auto_del: bool,
     ignore_pattern: str,
@@ -67,25 +68,25 @@ def extract_archives(
 
     ignore_pattern = re.compile(ignore_pattern)
 
-    for filename in filenames:
+    for path in paths:
         # ignore file
-        if ignore_pattern.match(filename):
+        if ignore_pattern.match(path):
             if verbosity:
-                print(f"Ignoring file: {filename}")
+                print(f"Ignoring path: {path}")
             continue
 
         # start extraction
         if verbosity:
-            print(f"Starting extraction: {filename}")
+            print(f"Starting extraction: {path}")
 
-        ex_ar(filename, prefix)
+        ex_ar(path, prefix)
 
         # finish extraction
         if verbosity:
-            print(f"Extracted file: {filename}")
+            print(f"Extracted file: {path}")
 
         # delete file
         if auto_del:
-            os.remove(filename)
+            os.remove(path)
             if verbosity:
-                print(f"Delete file: {filename}")
+                print(f"Delete file: {path}")
