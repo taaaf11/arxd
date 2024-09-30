@@ -9,7 +9,6 @@ from .utils import create_missing_dirs
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable
-    from re import Pattern
 
 
 def avail_ar_exts() -> Iterable[str]:
@@ -66,11 +65,11 @@ def extract_archives(
 ) -> None:
     """Wrapper function for ex_ar function."""
 
-    ignore_pattern = re.compile(ignore_pattern)
+    compiled_pattern = re.compile(ignore_pattern)
 
     for path in paths:
         # ignore file
-        if ignore_pattern.match(path):
+        if compiled_pattern.match(path):
             if verbosity:
                 print(f"Ignoring path: {path}")
             continue
