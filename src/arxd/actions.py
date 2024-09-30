@@ -1,8 +1,6 @@
 from argparse import Action
 from typing import NamedTuple
 
-from .constants import PROG_VER_INFO
-
 
 class HelpComponents(NamedTuple):
     desc: str
@@ -52,15 +50,4 @@ class CustomHelpAction(Action):
             print()
             print(h_cmpnts.epilog)
 
-        parser.exit()
-
-
-class VerInfoAction(Action):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.nargs = 0
-        self.help = "Print version info."
-
-    def __call__(self, parser, namespace, values, option_string):
-        print(PROG_VER_INFO)
         parser.exit()

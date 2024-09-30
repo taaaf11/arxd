@@ -5,7 +5,7 @@ import sys
 import typing
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-from .actions import CustomHelpAction, VerInfoAction
+from .actions import CustomHelpAction
 from .constants import PROG_DESC, PROG_NAME
 
 if typing.TYPE_CHECKING:
@@ -44,6 +44,13 @@ def parse_arguments() -> Namespace:
         help="Ignore filenames matching given PATTERN.",
     )
     add_arg(
+        "--exts",
+        # metavar="show_exts",
+        default=False,
+        action="store_true",
+        help="List supported archive filename extensions.",
+    )
+    add_arg(
         "-v",
         "--verbose",
         dest="verbosity",
@@ -53,7 +60,8 @@ def parse_arguments() -> Namespace:
     add_arg(
         "-V",
         "--version",
-        action=VerInfoAction,
+        action="store_true",
+        help="Print version info.",
     )
     add_arg(
         "-h",
