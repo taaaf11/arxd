@@ -20,7 +20,7 @@ def main() -> None:
         sys.exit(0)
 
     filenames = filter(
-        is_ar,
+        lambda path: os.path.isfile(path) and is_ar(path),
         os.listdir(),
     )
     config = Config(
