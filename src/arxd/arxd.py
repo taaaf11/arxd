@@ -10,6 +10,8 @@ from .utils import create_missing_dirs
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable
 
+    from .config import Config
+
 
 def avail_ar_exts() -> Iterable[str]:
     """Returns iterable of available archive extensions."""
@@ -56,36 +58,30 @@ def ex_ar(path: str, prefix: str) -> None:
     shutil.unpack_archive(path, full_path)
 
 
-def extract_archives(
-    paths: Iterable[str],
-    prefix: str,
-    auto_del: bool,
-    ignore_pattern: str,
-    verbosity: int,
-) -> None:
+def extract_archives(paths: Iterable[str], config: Config) -> None:
     """Wrapper function for ex_ar function."""
 
-    compiled_pattern = re.compile(ignore_pattern)
+    compiled_pattern = re.compile(config.ignore_pattern)
 
     for path in paths:
         # ignore file
         if compiled_pattern.match(path):
-            if verbosity:
+            if config.verbosity:
                 print(f"Ignoring path: {path}")
             continue
 
         # start extraction
-        if verbosity:
+        if config.verbosity:
             print(f"Starting extraction: {path}")
 
-        ex_ar(path, prefix)
+        ex_ar(path, config.prefix)
 
         # finish extraction
-        if verbosity:
+        if config.verbosity:
             print(f"Extracted file: {path}")
 
         # delete file
-        if auto_del:
+        if config.auto_del:
             os.remove(path)
-            if verbosity:
+            if config.verbosity:
                 print(f"Delete file: {path}")

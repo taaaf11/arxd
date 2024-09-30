@@ -45,7 +45,6 @@ def parse_arguments() -> Namespace:
     )
     add_arg(
         "--exts",
-        # metavar="show_exts",
         default=False,
         action="store_true",
         help="List supported archive filename extensions.",

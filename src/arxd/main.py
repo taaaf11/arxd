@@ -4,6 +4,7 @@ import os
 import sys
 
 from .arxd import avail_ar_exts, extract_archives, is_ar
+from .config import Config
 from .constants import PROG_VER_INFO
 from .utils import parse_arguments
 
@@ -17,11 +18,18 @@ def main() -> None:
     if args.version:
         print(PROG_VER_INFO)
         sys.exit(0)
+
     filenames = filter(
         is_ar,
         os.listdir(),
     )
-    extract_archives(filenames, args.prefix, args.delete, args.ignore, args.verbosity)
+    config = Config(
+        args.prefix,
+        args.delete,
+        args.ignore,
+        args.verbosity,
+    )
+    extract_archives(filenames, config)
 
 
 if __name__ == "__main__":
