@@ -54,7 +54,7 @@ def ex_ar(path: str, prefix: str) -> None:
     ex_dir = typing.cast(str, strip_ext(path))
     create_missing_dirs(prefix, ex_dir)
     full_path = os.path.join(prefix, ex_dir)
-    shutil.unpack_archive(filename, full_path)
+    shutil.unpack_archive(path, full_path)
 
 
 def extract_archives(
