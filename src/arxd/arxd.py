@@ -23,9 +23,6 @@ def avail_ar_exts() -> Iterable[str]:
 def is_ar(path: str) -> bool:
     """Returns whether given path is of archive file."""
 
-    if not os.path.isfile(path):
-        return False
-
     for fmt in avail_ar_exts():
         if path.endswith(fmt):
             return True
