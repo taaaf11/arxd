@@ -1,4 +1,3 @@
-import itertools
 import os
 import shutil
 import tempfile
@@ -75,13 +74,12 @@ class TestArxd(unittest.TestCase):
             bname = basename(path)
             stripped = arxd.strip_ext(bname)
             count = stripped[7:]
-            with tempfile.TemporaryDirectory(".") as tmpdir:
-                arxd.ex_ar(path, "")
-                self.assertTrue(
-                    set(os.listdir(f"archive{stripped[7:]}")) -
-                    set(map(basename, self.tmp_files_paths)) ==
-                    set()
-                )
+            arxd.ex_ar(path, "")
+            self.assertTrue(
+                set(os.listdir(f"archive{count}")) -
+                set(map(basename, self.tmp_files_paths)) ==
+                set()
+            )
 
     def test_ex_ar_with_prefix(self):
         basename = os.path.basename
@@ -122,7 +120,6 @@ class TestArxd(unittest.TestCase):
             for path in self.ar_paths:
                 bname = basename(path)
                 stripped = arxd.strip_ext(bname)
-                count = stripped[7:]
                 self.assertTrue(os.path.exists(path))
                 shutil.rmtree(f"{tmpdir}/{stripped}")
 
