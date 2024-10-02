@@ -19,10 +19,8 @@ def main() -> None:
         print(PROG_VER_INFO)
         sys.exit(0)
 
-    filenames = filter(
-        lambda path: os.path.isfile(path) and is_ar(path),
-        os.listdir(),
-    )
+    filenames = [path for path in os.listdir()
+                 if os.path.isfile(path) and is_ar(path)]
     config = Config(
         args.prefix,
         args.delete,

@@ -25,7 +25,7 @@ class TestUtils(unittest.TestCase):
 
     def test_create_missing_dirs_with_empty_prefix(self):
         prefix = ""
-        ex_dir = 'hello'
+        ex_dir = "hello"
 
         utils.create_missing_dirs(prefix, ex_dir)
 

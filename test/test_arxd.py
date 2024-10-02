@@ -55,8 +55,8 @@ class TestArxd(unittest.TestCase):
 
     def test_is_ar(self):
         self.assertTrue(
-            all(map(arxd.is_ar, self.ar_paths)) and
-            not all(map(arxd.is_ar, self.non_ar_paths))
+            all(map(arxd.is_ar, self.ar_paths))
+            and not all(map(arxd.is_ar, self.non_ar_paths))
         )
 
     def test_strip_ext_with_archive(self):
@@ -71,9 +71,9 @@ class TestArxd(unittest.TestCase):
         for count, path in enumerate(self.ar_paths):
             arxd.ex_ar(path, "")
             self.assertTrue(
-                set(os.listdir(f"archive{count}")) -
-                set(map(pbasename, self.tmp_files_paths)) ==
-                set()
+                set(os.listdir(f"archive{count}"))
+                - set(map(pbasename, self.tmp_files_paths))
+                == set()
             )
             shutil.rmtree(f"archive{count}")
 
@@ -82,9 +82,9 @@ class TestArxd(unittest.TestCase):
             with TemporaryDirectory(".") as tmpdir:
                 arxd.ex_ar(path, tmpdir)
                 self.assertTrue(
-                    set(os.listdir(pjoin(tmpdir, f"archive{count}"))) -
-                    set(map(pbasename, self.tmp_files_paths)) ==
-                    set()
+                    set(os.listdir(pjoin(tmpdir, f"archive{count}")))
+                    - set(map(pbasename, self.tmp_files_paths))
+                    == set()
                 )
 
     def test_extract_archives_with_auto_del(self):
@@ -94,7 +94,7 @@ class TestArxd(unittest.TestCase):
                 auto_del=True,
                 ignore_pattern="~^",
                 dry_run=False,
-                verbosity=False
+                verbosity=False,
             )
             arxd.extract_archives(self.ar_paths, config)
             for path in self.ar_paths:
@@ -107,7 +107,7 @@ class TestArxd(unittest.TestCase):
                 auto_del=False,
                 ignore_pattern="~^",
                 dry_run=False,
-                verbosity=False
+                verbosity=False,
             )
             arxd.extract_archives(self.ar_paths, config)
             for path in self.ar_paths:
@@ -120,7 +120,7 @@ class TestArxd(unittest.TestCase):
                 auto_del=False,
                 ignore_pattern="archive0",  # we ignore archive0.*
                 dry_run=False,
-                verbosity=False
+                verbosity=False,
             )
             arxd.extract_archives(self.ar_paths, config)
 
