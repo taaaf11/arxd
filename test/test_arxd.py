@@ -60,19 +60,15 @@ class TestArxd(unittest.TestCase):
         )
 
     def test_strip_ext_with_archive(self):
-        for path in self.ar_paths:
-            stripped = arxd.strip_ext(path)
-            count = stripped[7:]
-            self.assertTrue(stripped == f"archive{count}")
+        for count, path in enumerate(self.ar_paths):
+            self.assertTrue(arxd.strip_ext(path) == f"archive{count}")
 
     def test_strip_ext_non_archive(self):
         for path in self.non_ar_paths:
             self.assertTrue(arxd.strip_ext(path) is None)
 
     def test_ex_ar_without_prefix(self):
-        for path in self.ar_paths:
-            stripped = arxd.strip_ext(path)
-            count = stripped[7:]
+        for count, path in enumerate(self.ar_paths):
             arxd.ex_ar(path, "")
             self.assertTrue(
                 set(os.listdir(f"archive{count}")) -
@@ -82,9 +78,7 @@ class TestArxd(unittest.TestCase):
             shutil.rmtree(f"archive{count}")
 
     def test_ex_ar_with_prefix(self):
-        for path in self.ar_paths:
-            stripped = arxd.strip_ext(path)
-            count = stripped[7:]
+        for count, path in enumerate(self.ar_paths):
             with TemporaryDirectory(".") as tmpdir:
                 arxd.ex_ar(path, tmpdir)
                 self.assertTrue(
@@ -128,10 +122,7 @@ class TestArxd(unittest.TestCase):
             arxd.extract_archives(self.ar_paths, config)
 
             self.assertFalse(pexists("archive0"))
-            for path in self.ar_paths[1:]:
-                basename = pbasename(path)
-                stripped = arxd.strip_ext(basename)
-                count = stripped[7:]
+            for count, path in enumerate(self.ar_paths[1:], 1):
                 # path to where archive is extracted
                 extracted_path = pjoin(tmpdir, f"archive{count}")
                 self.assertTrue(pexists(extracted_path))
