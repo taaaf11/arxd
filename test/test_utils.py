@@ -12,19 +12,26 @@ class TestUtils(unittest.TestCase):
         self.old_cwd = os.getcwd()
         os.chdir(self.test_dir)
 
-    def test_create_missing_dirs(self):
+    def test_create_missing_dirs_with_prefix(self):
         prefix = "hello"
         ex_dir = "world"
-
-        isdir = os.path.isdir
 
         utils.create_missing_dirs(prefix, ex_dir)
 
         self.assertTrue(
-            isdir(prefix) and
-            isdir(os.path.join(prefix, ex_dir))
+            os.path.isdir(prefix) and
+            os.path.isdir(os.path.join(prefix, ex_dir))
         )
 
+    def test_create_missing_dirs_with_empty_prefix(self):
+        prefix = ""
+        ex_dir = 'hello'
+
+        utils.create_missing_dirs(prefix, ex_dir)
+
+        self.assertFalse(os.path.isdir(prefix))
+        self.assertTrue(os.path.isdir(ex_dir))
+
     def tearDown(self):
-        shutil.rmtree(self.test_dir)
         os.chdir(self.old_cwd)
+        shutil.rmtree(self.test_dir)
