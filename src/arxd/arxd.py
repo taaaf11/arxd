@@ -10,7 +10,7 @@ from rich.console import Console
 from .utils import create_missing_dirs
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Sequence
 
     from .config import Config
 
@@ -66,16 +66,17 @@ def extract_archives(paths: Sequence[str], config: Config) -> None:
 
     compiled_pattern = re.compile(config.ignore_pattern)
     console = Console()
+    show_msgs = config.verbosity or config.dry_run
 
     for path in paths:
         # ignore file
         if compiled_pattern.match(path):
-            if config.verbosity or config.dry_run:
+            if show_msgs:
                 console.print(f"Ignoring path: [bold red]{path}[/bold red]")
                 add_blank_line(path)
             continue
 
-        if config.verbosity or config.dry_run:
+        if show_msgs:
             extracted_path = os.path.join(config.prefix, strip_ext(path))
             console.print(
                 f'Extracting [bold yellow]"{path}"[/bold yellow] '
@@ -85,15 +86,15 @@ def extract_archives(paths: Sequence[str], config: Config) -> None:
             ex_ar(path, config.prefix)
 
         # finish extraction
-        if config.verbosity or config.dry_run:
+        if show_msgs:
             console.print(f"Extracted file: [bold green]{path}[/bold green]")
 
         # delete file
         if config.auto_del:
             if not config.dry_run:
                 os.remove(path)
-            if config.verbosity or config.dry_run:
+            if show_msgs:
                 console.print(f"Deleted file: [bold cyan]{path}[/bold cyan]")
 
-        if config.verbosity or config.dry_run:
+        if show_msgs:
             add_blank_line(path)
