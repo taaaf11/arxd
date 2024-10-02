@@ -71,7 +71,7 @@ def extract_archives(paths: Sequence[str], config: Config) -> None:
         # ignore file
         if compiled_pattern.match(path):
             if config.verbosity or config.dry_run:
-                console.print(f"Ignoring path: {path}", style="bold red")
+                console.print(f"Ignoring path: [bold red]{path}[/bold red]")
                 add_blank_line(path)
             continue
 
