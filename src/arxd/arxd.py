@@ -95,4 +95,5 @@ def extract_archives(paths: Sequence[str], config: Config) -> None:
             if config.verbosity or config.dry_run:
                 console.print(f"Deleted file: [bold cyan]{path}[/bold cyan]")
 
-        add_blank_line(path)
+        if config.verbosity or config.dry_run:
+            add_blank_line(path)
