@@ -49,6 +49,13 @@ def parse_arguments() -> Namespace:
         help="List supported archive filename extensions.",
     )
     add_arg(
+        "--dry-run",
+        default=False,
+        action="store_true",
+        help="See what would the application do without actually extracting" \
+        "archives.",
+    )
+    add_arg(
         "-v",
         "--verbose",
         dest="verbosity",

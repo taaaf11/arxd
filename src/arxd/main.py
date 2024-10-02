@@ -27,6 +27,7 @@ def main() -> None:
         args.prefix,
         args.delete,
         args.ignore,
+        args.dry_run,
         args.verbosity,
     )
     extract_archives(filenames, config)

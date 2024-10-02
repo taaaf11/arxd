@@ -63,22 +63,23 @@ def extract_archives(paths: Iterable[str], config: Config) -> None:
     for path in paths:
         # ignore file
         if compiled_pattern.match(path):
-            if config.verbosity:
+            if config.verbosity or config.dry_run:
                 print(f"Ignoring path: {path}")
             continue
 
         # start extraction
-        if config.verbosity:
+        if config.verbosity or config.dry_run:
             print(f"Starting extraction: {path}")
 
-        ex_ar(path, config.prefix)
+        if not config.dry_run:
+            ex_ar(path, config.prefix)
 
         # finish extraction
-        if config.verbosity:
+        if config.verbosity or config.dry_run:
             print(f"Extracted file: {path}")
 
         # delete file
         if config.auto_del:
             os.remove(path)
-            if config.verbosity:
+            if config.verbosity or config.dry_run:
                 print(f"Delete file: {path}")

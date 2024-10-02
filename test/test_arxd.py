@@ -93,6 +93,7 @@ class TestArxd(unittest.TestCase):
                 prefix=pbasename(tmpdir),
                 auto_del=True,
                 ignore_pattern="~^",
+                dry_run=False,
                 verbosity=False
             )
             arxd.extract_archives(self.ar_paths, config)
@@ -105,6 +106,7 @@ class TestArxd(unittest.TestCase):
                 prefix=pbasename(tmpdir),
                 auto_del=False,
                 ignore_pattern="~^",
+                dry_run=False,
                 verbosity=False
             )
             arxd.extract_archives(self.ar_paths, config)
@@ -117,6 +119,7 @@ class TestArxd(unittest.TestCase):
                 prefix=pbasename(tmpdir),
                 auto_del=False,
                 ignore_pattern="archive0",  # we ignore archive0.*
+                dry_run=False,
                 verbosity=False
             )
             arxd.extract_archives(self.ar_paths, config)
