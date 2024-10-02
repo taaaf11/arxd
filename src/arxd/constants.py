@@ -12,7 +12,7 @@ PROG_NAME_DESIGN: Final = """\
 ┴ ┴┴└─┴ └──┴┘\
 """
 
-PROG_VER: Final = "2.0.0"
+PROG_VER: Final = "3.1.0"
 
 PROG_DESC: Final = f"""\
 {PROG_NAME_DESIGN}
