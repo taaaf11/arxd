@@ -3,7 +3,7 @@ name = "arxd"
 description = "Extract (and delete) archive files under present working directory."
 readme = "README.md"
 license = {file = "LICENSE"}
-version = "2.0.0"
+version = "3.0.0"
 authors = [
   {name = "Muhammad Altaaf", email = "taafuuu@gmail.com"}
 ]
