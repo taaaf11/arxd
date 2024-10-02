@@ -3,7 +3,7 @@ import shutil
 import unittest
 from tempfile import mkdtemp
 
-from arxd import utils
+from src.arxd import utils
 
 
 class TestUtils(unittest.TestCase):

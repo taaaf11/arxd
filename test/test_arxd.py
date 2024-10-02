@@ -5,8 +5,8 @@ import unittest
 from string import ascii_lowercase
 from tempfile import mkdtemp
 
-from arxd import arxd
-from arxd.config import Config
+from src.arxd import arxd
+from src.arxd.config import Config
 
 
 class TestArxd(unittest.TestCase):
