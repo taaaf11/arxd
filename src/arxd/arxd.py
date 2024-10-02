@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import functools
 import os
 import re
 import shutil
@@ -61,11 +60,9 @@ def ex_ar(path: str, prefix: str) -> None:
 def extract_archives(paths: Sequence[str], config: Config) -> None:
     """Wrapper function for ex_ar function."""
 
-    def add_blank_line(path: str, paths: Sequence[str]):
+    def add_blank_line(path: str):
         if path is not paths[-1]:
             print()
-
-    add_blank_line = functools.partial(add_blank_line, paths=paths)
 
     compiled_pattern = re.compile(config.ignore_pattern)
     console = Console()
@@ -75,7 +72,7 @@ def extract_archives(paths: Sequence[str], config: Config) -> None:
         if compiled_pattern.match(path):
             if config.verbosity or config.dry_run:
                 console.print(f"Ignoring path: {path}", style="bold red")
-            add_blank_line(path)
+                add_blank_line(path)
             continue
 
         if config.verbosity or config.dry_run:
