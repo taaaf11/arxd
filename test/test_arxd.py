@@ -1,18 +1,21 @@
 import os
 import shutil
-import tempfile
 import unittest
 from string import ascii_lowercase
-from tempfile import mkdtemp
+from tempfile import TemporaryDirectory, mkdtemp
 
 from src.arxd import arxd
 from src.arxd.config import Config
+
+pjoin = os.path.join
+pexists = os.path.exists
+pbasename = os.path.basename
 
 
 class TestArxd(unittest.TestCase):
     def setUp(self):
         def create_empty_file(filename, parent="."):
-            path = os.path.join(parent, filename)
+            path = pjoin(parent, filename)
             open(path, "w").close()
             return path
 
@@ -36,7 +39,7 @@ class TestArxd(unittest.TestCase):
         for count, rest in enumerate(shutil.get_unpack_formats()):
             fmt_name, fmt_exts, fmt_desc = rest
             path = shutil.make_archive(f"archive{count}", fmt_name, "files")
-            self.ar_paths.append(os.path.basename(path))
+            self.ar_paths.append(pbasename(path))
 
         # create temporary non-archive files
         for path in self.tmp_files_paths:
@@ -57,7 +60,6 @@ class TestArxd(unittest.TestCase):
         )
 
     def test_strip_ext_with_archive(self):
-        basename = os.path.basename
         for path in self.ar_paths:
             stripped = arxd.strip_ext(path)
             count = stripped[7:]
@@ -74,7 +76,7 @@ class TestArxd(unittest.TestCase):
             arxd.ex_ar(path, "")
             self.assertTrue(
                 set(os.listdir(f"archive{count}")) -
-                set(map(os.path.basename, self.tmp_files_paths)) ==
+                set(map(pbasename, self.tmp_files_paths)) ==
                 set()
             )
             shutil.rmtree(f"archive{count}")
@@ -83,56 +85,56 @@ class TestArxd(unittest.TestCase):
         for path in self.ar_paths:
             stripped = arxd.strip_ext(path)
             count = stripped[7:]
-            with tempfile.TemporaryDirectory(".") as tmpdir:
+            with TemporaryDirectory(".") as tmpdir:
                 arxd.ex_ar(path, tmpdir)
                 self.assertTrue(
-                    set(os.listdir(os.path.join(tmpdir, f"archive{count}"))) -
-                    set(map(os.path.basename, self.tmp_files_paths)) ==
+                    set(os.listdir(pjoin(tmpdir, f"archive{count}"))) -
+                    set(map(pbasename, self.tmp_files_paths)) ==
                     set()
                 )
 
     def test_extract_archives_with_auto_del(self):
-        with tempfile.TemporaryDirectory(dir=".") as tmpdir:
+        with TemporaryDirectory(dir=".") as tmpdir:
             config = Config(
-                prefix=os.path.basename(tmpdir),
+                prefix=pbasename(tmpdir),
                 auto_del=True,
                 ignore_pattern="~^",
                 verbosity=False
             )
             arxd.extract_archives(self.ar_paths, config)
             for path in self.ar_paths:
-                self.assertFalse(os.path.exists(path))
+                self.assertFalse(pexists(path))
 
     def test_extract_archives_with_auto_del_false(self):
-        with tempfile.TemporaryDirectory(dir=".") as tmpdir:
+        with TemporaryDirectory(dir=".") as tmpdir:
             config = Config(
-                prefix=os.path.basename(tmpdir),
+                prefix=pbasename(tmpdir),
                 auto_del=False,
                 ignore_pattern="~^",
                 verbosity=False
             )
             arxd.extract_archives(self.ar_paths, config)
             for path in self.ar_paths:
-                self.assertTrue(os.path.exists(path))
+                self.assertTrue(pexists(path))
 
     def test_extract_archives_with_ignore_pattern(self):
-        with tempfile.TemporaryDirectory(dir=".") as tmpdir:
+        with TemporaryDirectory(dir=".") as tmpdir:
             config = Config(
-                prefix=os.path.basename(tmpdir),
+                prefix=pbasename(tmpdir),
                 auto_del=False,
                 ignore_pattern="archive0",  # we ignore archive0.*
                 verbosity=False
             )
             arxd.extract_archives(self.ar_paths, config)
 
-            self.assertFalse(os.path.exists("archive0"))
+            self.assertFalse(pexists("archive0"))
             for path in self.ar_paths[1:]:
-                basename = os.path.basename(path)
+                basename = pbasename(path)
                 stripped = arxd.strip_ext(basename)
                 count = stripped[7:]
                 # path to where archive is extracted
-                extracted_path = os.path.join(tmpdir, f"archive{count}")
-                self.assertTrue(os.path.exists(extracted_path))
+                extracted_path = pjoin(tmpdir, f"archive{count}")
+                self.assertTrue(pexists(extracted_path))
 
     def tearDown(self):
         os.chdir(self.old_cwd)
