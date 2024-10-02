@@ -93,7 +93,8 @@ def extract_archives(paths: Sequence[str], config: Config) -> None:
 
         # delete file
         if config.auto_del:
-            os.remove(path)
+            if not config.dry_run:
+                os.remove(path)
             if config.verbosity or config.dry_run:
                 console.print(f"Deleted file: [bold cyan]{path}[/bold cyan]")
 
