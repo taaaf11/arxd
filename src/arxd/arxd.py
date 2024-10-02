@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import functools
 import os
 import re
 import shutil
 import typing
+
+from rich.console import Console
 
 from .utils import create_missing_dirs
 
@@ -55,31 +58,43 @@ def ex_ar(path: str, prefix: str) -> None:
     shutil.unpack_archive(path, full_path)
 
 
-def extract_archives(paths: Iterable[str], config: Config) -> None:
+def extract_archives(paths: Sequence[str], config: Config) -> None:
     """Wrapper function for ex_ar function."""
 
+    def add_blank_line(path: str, paths: Sequence[str]):
+        if path is not paths[-1]:
+            print()
+
+    add_blank_line = functools.partial(add_blank_line, paths=paths)
+
     compiled_pattern = re.compile(config.ignore_pattern)
+    console = Console()
 
     for path in paths:
         # ignore file
         if compiled_pattern.match(path):
             if config.verbosity or config.dry_run:
-                print(f"Ignoring path: {path}")
+                console.print(f"Ignoring path: {path}", style="bold red")
+            add_blank_line(path)
             continue
 
-        # start extraction
         if config.verbosity or config.dry_run:
-            print(f"Starting extraction: {path}")
-
+            extracted_path = os.path.join(config.prefix, strip_ext(path))
+            console.print(
+                f'Extracting [bold yellow]"{path}"[/bold yellow] '
+                f'to [bold yellow]"{extracted_path}"[/bold yellow]'
+            )
         if not config.dry_run:
             ex_ar(path, config.prefix)
 
         # finish extraction
         if config.verbosity or config.dry_run:
-            print(f"Extracted file: {path}")
+            console.print(f"Extracted file: [bold green]{path}[/bold green]")
 
         # delete file
         if config.auto_del:
             os.remove(path)
             if config.verbosity or config.dry_run:
-                print(f"Delete file: {path}")
+                console.print(f"Deleted file: [bold cyan]{path}[/bold cyan]")
+
+        add_blank_line(path)
