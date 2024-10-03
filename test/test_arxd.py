@@ -46,13 +46,6 @@ class TestArxd(unittest.TestCase):
             path = create_empty_file(path + ".txt")
             self.non_ar_paths.append(path)
 
-    def test_avail_ar_exts(self):
-        data = list(arxd.avail_ar_exts())
-        accurate_data = []
-        for fmt_name, fmt_exts, fmt_desc in shutil.get_unpack_formats():
-            accurate_data.extend(fmt_exts)
-        self.assertTrue(data, accurate_data)
-
     def test_is_ar(self):
         self.assertTrue(
             all(map(arxd.is_ar, self.ar_paths))

@@ -24,7 +24,6 @@ def parse_arguments() -> Namespace:
         "-d",
         "--delete",
         action="store_true",
-        default=False,
         help="Delete files after extraction is completed.",
     )
     add_arg(
@@ -44,13 +43,11 @@ def parse_arguments() -> Namespace:
     )
     add_arg(
         "--exts",
-        default=False,
         action="store_true",
         help="List supported archive filename extensions.",
     )
     add_arg(
         "--dry-run",
-        default=False,
         action="store_true",
         help="See what would the application do "
         "without actually extracting archives.",
