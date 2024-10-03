@@ -4,6 +4,9 @@ description = "Extract (and delete) archive files under present working director
 readme = "README.md"
 license = {file = "LICENSE"}
 version = "3.1.0"
+classifiers = [
+  "Private :: Do Not Upload"
+]
 authors = [
   {name = "Muhammad Altaaf", email = "taafuuu@gmail.com"}
 ]
