@@ -1,5 +1,5 @@
 from argparse import Action
-from typing import NamedTuple
+from typing import NamedTuple, override
 
 
 class HelpComponents(NamedTuple):
@@ -15,7 +15,8 @@ class CustomHelpAction(Action):
         self.nargs = 0
         self.help = "Show this help message and exit."
 
-    def split_help(self, parser):
+    @staticmethod
+    def split_help(parser):
         description = parser.description or ""
         epilog = parser.epilog or ""
         usage = parser.format_usage()
@@ -36,8 +37,9 @@ class CustomHelpAction(Action):
 
         return HelpComponents(description, usage, opt_help, epilog)
 
-    def __call__(self, parser, namespace, values, option_string):
-        h_cmpnts = self.split_help(parser)
+    @override
+    def __call__(self, parser, namespace, values, option_string=None):
+        h_cmpnts = CustomHelpAction.split_help(parser)
 
         print(h_cmpnts.desc, end="\n" * 2)
 
