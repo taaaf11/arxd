@@ -11,16 +11,19 @@ from .utils import parse_arguments
 
 def main() -> None:
     args = parse_arguments()
+
     if args.exts:
         print("Supported archive formats: ", end="")
         print(", ".join(avail_ar_exts()))
         sys.exit(0)
+
     if args.version:
         print(PROG_VER_INFO)
         sys.exit(0)
 
     filenames = [path for path in os.listdir()
                  if os.path.isfile(path) and is_ar(path)]
+
     config = Config(
         args.prefix,
         args.delete,
@@ -28,6 +31,7 @@ def main() -> None:
         args.dry_run,
         args.verbosity,
     )
+
     extract_archives(filenames, config)
 
 

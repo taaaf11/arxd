@@ -26,6 +26,7 @@ def parse_arguments() -> Namespace:
         action="store_true",
         help="Delete files after extraction is completed.",
     )
+
     add_arg(
         "-p",
         "--prefix",
@@ -33,6 +34,7 @@ def parse_arguments() -> Namespace:
         default="",
         help="Set prefix. Default is <current directory>/",
     )
+
     add_arg(
         "-i",
         "--ignore",
@@ -41,17 +43,20 @@ def parse_arguments() -> Namespace:
         default="~^",  # does not match anything
         help="Ignore filenames matching given PATTERN.",
     )
+
     add_arg(
         "--exts",
         action="store_true",
         help="List supported archive filename extensions.",
     )
+
     add_arg(
         "--dry-run",
         action="store_true",
         help="See what would the application do "
         "without actually extracting archives.",
     )
+
     add_arg(
         "-v",
         "--verbose",
@@ -59,12 +64,14 @@ def parse_arguments() -> Namespace:
         action="store_true",
         help="Be verbose.",
     )
+
     add_arg(
         "-V",
         "--version",
         action="store_true",
         help="Print version info.",
     )
+
     add_arg(
         "-h",
         "--help",

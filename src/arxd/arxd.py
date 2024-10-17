@@ -82,6 +82,7 @@ def extract_archives(paths: Sequence[str], config: Config) -> None:
                 f'Extracting [bold yellow]"{path}"[/bold yellow] '
                 f'to [bold yellow]"{extracted_path}"[/bold yellow]'
             )
+
         if not config.dry_run:
             ex_ar(path, config.prefix)
 
